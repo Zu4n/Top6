@@ -20,7 +20,7 @@ public class Crawler {
         String output = "";
         String seperator = "||";
         Date date = new Date();
-        String today = (1900+date.getYear())+"-"+(date.getMonth()+1)+"-"+date.getDate();
+        String today = (1900+date.getYear())+String.format("%02d",(date.getMonth()+1))+String.format("%02d",date.getDate());
         for(int i=1; i<page; i++){
             //네이버 기사 메인화면 url
             String url = "https://news.naver.com/main/list.naver?mode=LPOD&sid2=140&sid1=001&mid=sec&oid=001&isYeonhapFlash=Y&aid=0014422676&date=20240103&page="+i;
@@ -43,8 +43,8 @@ public class Crawler {
             }
             System.out.println(i+"page 크롤링 종료");
         }
-
-        File file = new File(path+"articles.csv");
+        String fileName = today+String.format("%02d", date.getHours())+String.format("%02d", date.getMinutes())+String.format("%02d", date.getSeconds());
+        File file = new File(path+"articles_"+fileName+".txt");
         FileOutputStream fileOutputStream = null;
         try {
             fileOutputStream = new FileOutputStream(file);
@@ -55,6 +55,5 @@ public class Crawler {
             fileOutputStream.close();
             System.out.println("파일저장완료");
         }
-
     }
 }
