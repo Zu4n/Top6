@@ -18,6 +18,7 @@ public class NlpWorker {
         /*파일 읽어오기*/
         String path = "C:/dev/output/";
         String seperator = "\\|\\|";
+        String[] wholeTitles = null;
         BufferedReader bufferedReader = null;
         List<Map<String, String>> articles = new ArrayList<>();
         try {
@@ -54,6 +55,7 @@ public class NlpWorker {
 
         /*제목 자연어처리*/
         Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
+        int i = 0;
         for(Map map : articles){
             KomoranResult komoranResult = komoran.analyze(map.get("title").toString());
             System.out.println("title = "+map.get("title"));
@@ -61,12 +63,15 @@ public class NlpWorker {
             for(Token token : tokens){
                 System.out.format("(%2d, %2d) %s/%s\n", token.getBeginIndex(), token.getEndIndex(), token.getMorph(), token.getPos());
             }*/
+            //명사추출
             List<String> nouns = komoranResult.getNouns();
+            //추출된 명사 담기
             for(String noun : nouns){
-                System.out.println("Noun : "+noun);
+                wholeTitles[i] = noun;
+                i++;
             }
         }
-
+        /*자연어 처리된 명사들 카운팅*/
 
     }
 
